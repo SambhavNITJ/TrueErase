@@ -19,6 +19,7 @@ const clerkWebhooks = async(req, res) => {
         ///payload - req.body, header - req.headers
 
         const {data, type} = req.body;
+        console.log("hiii");
 
         switch (type) {
             case "user.created":{
@@ -29,7 +30,7 @@ const clerkWebhooks = async(req, res) => {
                     lastname : data.last_name,
                     photo : data.image_url
                 }
-                console.log("user created")
+                //console.log("user created")
                 await userModel.create(userData);
                 res.json({});
                 break;
@@ -42,12 +43,12 @@ const clerkWebhooks = async(req, res) => {
                     photo : data.image_url
                 }
 
-                await userModel.findOneAndUpdate({clearkId : data.id}, userData);
+                await userModel.findOneAndUpdate({clerkId : data.id}, userData);
                 res.json({});
                 break;
             }
             case "user.deleted":{
-                await userModel.findOneAndDelete({clearkId : data.id});
+                await userModel.findOneAndDelete({clerkId : data.id});
                 res.json({});
                 break;
             }

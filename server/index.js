@@ -17,7 +17,7 @@ app.get('/', (req, res) =>
     res.send('hi')
 )
 
-app.use('api/user', userRouter)
+app.use('/api/user', userRouter)
 
 connectDB()
     .then(() => {
