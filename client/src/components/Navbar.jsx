@@ -2,6 +2,9 @@ import React from 'react'
 import {assets} from '../assets/assets.js'
 import { Link } from 'react-router-dom'
 import { SignedIn, SignedOut, SignInButton, useClerk, UserButton, useUser } from "@clerk/clerk-react";
+import axios from 'axios';
+
+
 
 function Navbar() {
   const {openSignIn} = useClerk()
@@ -26,3 +29,6 @@ function Navbar() {
 }
 
 export default Navbar
+
+
+
