@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
     photo : {type : String , required : true},
     firstname : {type : String}, 
     lastname : {tyep : String}, 
-    creditBalance : {type : Number, defualt : 10}
+    creditBalance : {type : Number, default : 10}
 });
 
 
