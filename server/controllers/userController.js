@@ -63,9 +63,8 @@ const clerkWebhooks = async(req, res) => {
 const userCredits = async(req, res) => {
     try {
         const {clerkId} = req.body; ///middleware provides
-        
         const userData = await userModel.findOne({clerkId});
-
+        console.log('inside credit fetch');
         res.json({success:true, credits : userData.creditBalance});
 
     } catch (error) {

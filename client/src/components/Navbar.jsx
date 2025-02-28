@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 import { SignedIn, SignedOut, SignInButton, useClerk, UserButton, useUser } from "@clerk/clerk-react";
 import axios from 'axios';
 import {AppContext} from '../context/AppContext.jsx'
-
+import {useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const { openSignIn } = useClerk();
   const { isSignedIn, user } = useUser();
   const {credit, loadCreditsData} = useContext(AppContext);
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if(isSignedIn){
@@ -23,7 +24,12 @@ function Navbar() {
         <img className="w-32 sm:w-44" src={assets.logo} alt="" />
       </Link>
       {isSignedIn ? (
-        <div>
+        <div className='flex items-center gap-2 sm:gap-3'>
+            <button onClick={()=>{navigate("/buy")}} className='flex items-center gap-2 bg-blue-100 px-4 sm:px-7 py-1.5 sm:py-2.5 rounded-full hover:scale-105 transition-all duration-700'>
+              <img className='w-5' src={assets.credit_icon} alt="" />
+              <p className='text-xs sm:text-sm font-medium text-gray-600'>Credits:{credit}</p>
+            </button>
+            <p className='text-gray-600 max-sm:hidden'>Hi, {user.fullName}</p>       
           <UserButton />
         </div>
       ) : (

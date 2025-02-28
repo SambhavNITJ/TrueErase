@@ -1,10 +1,9 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import bodyParser from 'body-parser';
 import connectDB from './db/index.js';
 import userRouter from './routes/userRoutes.js';
-
+import imageRouter from './routes/imageRoutes.js'
 
 const app = express();
 
@@ -17,6 +16,7 @@ app.get('/', (req, res) =>
 )
 
 app.use('/api/user', userRouter)
+app.use('/api/image', imageRouter)
 
 connectDB()
     .then(() => {
