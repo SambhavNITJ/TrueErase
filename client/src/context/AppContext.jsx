@@ -48,11 +48,12 @@ const AppContextProvider = (props) => {
 
             image && formdata.append('image', image);
 
-            const data = await axios.post(backendUrl + '/api/image/remove-bg', formdata, {
+            const {data} = await axios.post(backendUrl + '/api/image/remove-bg', formdata, {
                 headers : {token}
             })
 
             if(data.success){
+                console.log('result image rcved');
                 setResultImage(data.resultImage);
                 data.creditBalance && setCredit(data.creditBalance);
             }else{

@@ -23,7 +23,7 @@ const Result = () => {
           <div className='flex flex-col'>
             <p className='font-semibold text-gray-600 mb-2'>Background Removed</p>
             <div className='rounde-md border border-gray-300 h-full relative bg-layer overflow-hidden'>
-              <img src={resultImage ? URL.createObjectURL(resultImage) : null} alt="" />
+              <img src={resultImage ? resultImage : null} alt="" />
               {
                 !resultImage && image && (
                   <div className='absolute right-1/2 bottom-1/2 transform translate-x-1/2 translate-y-1/2'>
@@ -39,7 +39,6 @@ const Result = () => {
               <button onClick={()=>{navigate("/")}} className='px-8 py-2.5 text-violet-600 text-sm border border-violet-600 rounded-full hover:scale-105 transition-all duration-700'>Try another image</button>
               <a href = {resultImage} download className='px-8 py-2.5 text-white text-sm bg-gradient-to-r from-violet-600 to-fuchsia-500 rounded-full hover:scale-105 transition-all duration-700'>Download image</a>
           </div>)}
-          
        </div>
       </div>
     </div>
