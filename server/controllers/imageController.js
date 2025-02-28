@@ -19,7 +19,6 @@ export const removeBgImage = async(req, res) => {
         }
 
         const imagePath = req.file.path;
-        console.log(imagePath);
 
         //read image file
         const imageFile = fs.createReadStream(imagePath);
