@@ -16,7 +16,7 @@ function Navbar() {
     if(isSignedIn){
       loadCreditsData();
     }
-  }, [isSignedIn, loadCreditsData])
+  }, [isSignedIn])
 
   return (
     <div className="flex items-center justify-between mx-4 py-3 lg:mx-44">

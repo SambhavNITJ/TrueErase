@@ -1,5 +1,4 @@
 import multer from 'multer'
-//creating multer middleware to parse formdata
 
 const storage = multer.diskStorage({
     filename: function (req, file, callback) {
@@ -7,5 +6,5 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({storage});
+const upload = multer(storage);
 export default upload;

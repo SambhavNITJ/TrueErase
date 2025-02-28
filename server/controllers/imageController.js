@@ -10,7 +10,6 @@ export const removeBgImage = async(req, res) => {
         console.log('inside bg remove');
         const {clerkId} = req.body;
         const user = await userModel.findOne({clerkId});
-        console.log(user);
         if(!user){
             return res.json({success:false, message : 'user not found'});
         }
@@ -20,6 +19,8 @@ export const removeBgImage = async(req, res) => {
         }
 
         const imagePath = req.file.path;
+        console.log(imagePath);
+
         //read image file
         const imageFile = fs.createReadStream(imagePath);
 
@@ -47,6 +48,7 @@ export const removeBgImage = async(req, res) => {
         res.json({success:true, resultImage, creditBalance : user.creditBalance-1, message : 'background remove'});
 
     } catch (error) {
+      console.log("inside remove bg error");
         console.log(error.message);
         res.json({success : false , message : error.message});
     }

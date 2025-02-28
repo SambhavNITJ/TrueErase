@@ -43,7 +43,7 @@ const AppContextProvider = (props) => {
             setResultImage(false);
             navigate('/result');
 
-            const token = getToken();
+            const token = await getToken();  //await was missing 
             const formdata = new FormData();
 
             image && formdata.append('image', image);
