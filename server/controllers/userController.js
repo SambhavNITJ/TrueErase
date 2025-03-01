@@ -1,6 +1,7 @@
 import {Webhook} from 'svix'
 import userModel from '../models/userModel.js'
-
+import razorpay from 'razorpay'
+import transactionModel from '../models/transactionModel.js'
 
 ///API Controller function to manage clerk user with database
 /// http://localhost:3000/api/user/webhooks   --- endpoint for webhooks
@@ -73,5 +74,110 @@ const userCredits = async(req, res) => {
     }
 }
 
+const razorpayInstance = new razorpay({
+    key_id : process.env.RAZORPAY_KEY_ID,
+    key_secret : process.env.RAZORPAY_KEY_SECRET,
+})
 
-export {clerkWebhooks, userCredits}
+const paymentRazorpay = async(req, res) => {
+    try {
+        console.log('inside payment controller');
+        const {clerkId, planId} = req.body;
+
+        const userData = await userModel.findOne({clerkId});
+
+        if(!userData || !planId){
+            return res.json({success : false, message : 'Invalid Credentials'});
+        }
+
+        let amount, date, credits , plan;
+
+        switch (planId) {
+            case 'Basic':{
+                plan = 'Basic'
+                credits = 1;
+                amount = 50;
+                break;
+            }
+            case 'Advanced':{
+                plan = 'Advanced'
+                credits = 5
+                amount = 250
+                break;
+            }         
+            case 'Business':{
+                plan = 'Business'
+                credits = 100
+                amount = 5000           
+                break;
+            }
+            default:
+                break;
+        }
+
+        date = Date.now();
+
+
+        //creating transaction
+        const transactionData = {
+            clerkId,
+            plan,
+            amount,
+            credits,
+            date
+        }
+
+        const newTransaction = await transactionModel.create(transactionData);
+
+        ///create options for order
+
+        const options = {
+            amount : amount*100 ,
+            currency : process.env.CURRENCY,
+            receipt : newTransaction._id,
+        }
+
+        await razorpayInstance.orders.create(options, (error, order)=>{
+            if(error){
+                return res.json({success : false, message : error})
+            }
+            res.json({success : true, order});
+        })
+
+    } catch (error) {
+        console.log(error.message);
+        res.json({success : false, message : error.message});
+    }
+}
+
+
+const verifyRazorpay = async(req, res)=>{
+    try {
+        const {razorpay_order_id} = req.body;
+        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+        if(orderInfo.status === 'paid'){
+            const transactionData = await transactionModel.findById(orderInfo.receipt);
+            if(transactionData.payment){
+                return res.json({success:false, message : 'Payment failed'});
+            }
+
+            //adding credits in user data
+            const userData = await userModel.findOne({clerkId : transactionData.clerkId})
+            const creditBalance = userData.creditBalance + transactionData.credits;
+            await userModel.findByIdAndUpdate(userData._id, {creditBalance});
+
+            //make payment true
+            await transactionModel.findByIdAndUpdate(transactionData._id, {payment : true});
+
+            res.json({success:true, message: 'Credits Added'});
+
+        }
+
+
+    } catch (error) {
+        console.log(error.message);
+        return res.json({success:false, message: error.message});
+    }
+}
+
+export {clerkWebhooks, userCredits, paymentRazorpay, verifyRazorpay}
