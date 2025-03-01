@@ -11,21 +11,21 @@ const Steps = () => {
             <img className='max-w-9' src={assets.upload_icon} alt="" />
             <div>
                 <p className='text-xl font-medium'>Upload image</p>
-                <p className='text-sm text-neutral-500 mt-1'>This is a demo text, will replace it later. <br /> This is a demo.</p>
+                <p className='text-sm text-neutral-500 mt-1'>Simply upload the image you want to<br /> remove the background from</p>
             </div>
         </div>
         <div className='flex items-start gap-4 bg-white  drop-shadow-md p-5 rounded hover:scale-105 transition-all duration-500'>
             <img className='max-w-9' src={assets.remove_bg_icon} alt="" />
             <div>
                 <p className='text-xl font-medium'>Remove background</p>
-                <p className='text-sm text-neutral-500 mt-1'>This is a demo text, will replace it later. <br /> This is a demo.</p>
+                <p className='text-sm text-neutral-500 mt-1'>Let our tool automatically remove the background <br /> from your image in seconds</p>
             </div>
         </div>
         <div className='flex items-start gap-4 bg-white  drop-shadow-md p-5 rounded hover:scale-105 transition-all duration-500'>
             <img className='max-w-9' src={assets.download_icon} alt="" />
             <div>
                 <p className='text-xl font-medium'>Download image</p>
-                <p className='text-sm text-neutral-500 mt-1'>This is a demo text, will replace it later. <br /> This is a demo.</p>
+                <p className='text-sm text-neutral-500 mt-1'>Download your background-free image ,<br />ready for use in just a click</p>
             </div>
         </div>
       </div>
